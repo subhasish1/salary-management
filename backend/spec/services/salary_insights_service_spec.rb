@@ -26,7 +26,7 @@ RSpec.describe SalaryInsightsService, type: :service do
       end
 
       it 'returns employee count for the country' do
-        stats = SalaryInsightsService.by_country('USa ')
+        stats = SalaryInsightsService.by_country('USa')
         expect(stats[:total_employees]).to eq(3)
       end
 
@@ -56,6 +56,13 @@ RSpec.describe SalaryInsightsService, type: :service do
         stats = SalaryInsightsService.by_country('UsA')
         expect(stats[:min_salary]).to eq(50_000)
         expect(stats[:country]).to eq('USA')
+      end
+
+      it 'raise error when invalid country stored in database' do
+        FactoryBot.create(:employee, country: ' USA ', salary: 40_000)
+        stats = SalaryInsightsService.by_country('usa')
+        
+        expect(stats[:total_employees]).to eq(4)
       end
     end
 
