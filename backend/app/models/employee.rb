@@ -4,4 +4,11 @@ class Employee < ApplicationRecord
     validates :job_title, presence: true
     validates :country, presence: true
     validates :salary, presence: true, numericality: { greater_than: 0 }
+    validates :email, presence: true, uniqueness: true
+
+    %w[first_name last_name job_title country email].each do |attr|
+        define_method("#{attr}=") do |value|
+            super(value&.strip)
+        end
+    end
 end

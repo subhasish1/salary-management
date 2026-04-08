@@ -8,7 +8,7 @@ RSpec.describe Employee, type: :model do
       it 'is valid with valid attributes' do
         expect(employee).to be_valid
       end
-      
+
       it 'validates presence of first_name' do
         employee.first_name = nil
         expect(employee).not_to be_valid
@@ -33,6 +33,33 @@ RSpec.describe Employee, type: :model do
         employee.salary = nil
         expect(employee).not_to be_valid
       end
+
+      it 'validates email presence' do
+        employee.email = nil
+        expect(employee).not_to be_valid
+      end
+
+      it 'validates email uniqueness' do
+        FactoryBot.create(:employee, email: 'john.doe@example.com')
+        duplicate_employee = FactoryBot.build(:employee, email: 'john.doe@example.com')
+        expect(duplicate_employee).not_to be_valid
+      end
+
+        it 'strips whitespace from attributes' do
+            employee.first_name = ' John '
+            employee.last_name = ' Doe '
+            employee.job_title = ' Developer '
+            employee.country = ' USA '
+            employee.email = 'john.doe@example.com'
+
+            employee.save
+            expect(employee.first_name).to eq('John')
+            expect(employee.last_name).to eq('Doe')
+            expect(employee.job_title).to eq('Developer')
+            expect(employee.country).to eq('USA')
+            expect(employee.email).to eq('john.doe@example.com')
+        end
+
     end
 
     describe 'numericality validations' do
