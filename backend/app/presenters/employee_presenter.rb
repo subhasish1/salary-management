@@ -10,6 +10,8 @@ class EmployeePresenter
   def to_h
     {
       id: @employee.id,
+      first_name: @employee.first_name,
+      last_name: @employee.last_name,
       full_name: full_name,
       job_title: @employee.job_title,
       country: @employee.country,

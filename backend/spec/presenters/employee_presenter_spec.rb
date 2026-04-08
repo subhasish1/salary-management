@@ -21,6 +21,8 @@ RSpec.describe EmployeePresenter, type: :presenter do
       hash = presenter.to_h
       
       expect(hash[:full_name]).to eq('John Doe')
+      expect(hash[:first_name]).to eq(employee.first_name)
+      expect(hash[:last_name]).to eq(employee.last_name)
       expect(hash[:job_title]).to eq(employee.job_title)
       expect(hash[:country]).to eq(employee.country)
       expect(hash[:salary]).to eq(employee.salary)
