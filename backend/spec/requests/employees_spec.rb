@@ -23,4 +23,22 @@ RSpec.describe "Employees API", type: :request do
       expect(john["full_name"]).to eq("John Doe")
     end
   end
+
+  describe "GET /employees/:id" do
+    it "returns the employee with full_name" do
+      employee = FactoryBot.create(:employee, first_name: "Jane", last_name: "Smith")
+
+      get "/employees/#{employee.id}"
+
+      expect(response).to have_http_status(:ok)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["full_name"]).to eq("Jane Smith")
+    end
+
+    it "returns 404 for non-existent employee" do
+      get "/employees/99999"
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
