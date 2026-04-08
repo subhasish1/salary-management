@@ -68,7 +68,8 @@ Frontend (React) → Backend (Rails API) → Database (SQLite)
 
 ### Employee
 
-* full_name (string)
+* first_name (string)
+* last_name (string)
 * job_title (string)
 * country (string)
 * salary (integer)
