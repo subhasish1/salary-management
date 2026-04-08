@@ -44,6 +44,10 @@ export default function EmployeeDetail({ employeeId, onBack, onEdit }) {
 
       <div className="detail-info">
         <div className="info-item">
+          <label>Email:</label>
+          <p>{employee.email}</p>
+        </div>
+        <div className="info-item">
           <label>Job Title:</label>
           <p>{employee.job_title}</p>
         </div>

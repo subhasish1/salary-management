@@ -6,6 +6,7 @@ export default function EmployeeForm({ employeeId, onSuccess, onCancel }) {
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
+    email: '',
     job_title: '',
     country: '',
     salary: '',
@@ -26,6 +27,7 @@ export default function EmployeeForm({ employeeId, onSuccess, onCancel }) {
       setFormData({
         first_name: data.first_name || '',
         last_name: data.last_name || '',
+        email: data.email || '',
         job_title: data.job_title,
         country: data.country,
         salary: data.salary,
@@ -87,6 +89,18 @@ export default function EmployeeForm({ employeeId, onSuccess, onCancel }) {
             id="last_name"
             name="last_name"
             value={formData.last_name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
             required
           />

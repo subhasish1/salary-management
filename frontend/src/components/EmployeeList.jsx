@@ -49,6 +49,7 @@ export default function EmployeeList({ onViewEmployee, onEditEmployee, onRefresh
           <thead>
             <tr>
               <th>Full Name</th>
+              <th>Email</th>
               <th>Job Title</th>
               <th>Country</th>
               <th>Salary</th>
@@ -59,6 +60,7 @@ export default function EmployeeList({ onViewEmployee, onEditEmployee, onRefresh
             {employees.map((employee) => (
               <tr key={employee.id}>
                 <td>{employee.full_name}</td>
+                <td>{employee.email}</td>
                 <td>{employee.job_title}</td>
                 <td>{employee.country}</td>
                 <td>{employee.salary.toLocaleString()}</td>
