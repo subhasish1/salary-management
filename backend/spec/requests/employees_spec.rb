@@ -41,4 +41,50 @@ RSpec.describe "Employees API", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+
+  describe "POST /employees" do
+    it "creates a new employee" do
+      employee_params = {
+        first_name: "Alice",
+        last_name: "Johnson",
+        job_title: "Developer",
+        country: "USA",
+        salary: 80000
+      }
+
+      post "/employees", params: { employee: employee_params }
+
+      expect(response).to have_http_status(:created)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["full_name"]).to eq("Alice Johnson")
+      expect(parsed_body["job_title"]).to eq("Developer")
+      expect(parsed_body["country"]).to eq("USA")
+      expect(parsed_body["salary"]).to eq(80000)
+    end
+
+    it "returns errors for invalid employee" do
+      post "/employees", params: { employee: { first_name: "", last_name: "" } }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["errors"]).to include("First name can't be blank")
+      expect(parsed_body["errors"]).to include("Last name can't be blank")
+    end
+
+    it "returns errors for invalid salary" do
+      employee_params = {
+        first_name: "Alice",
+        last_name: "Johnson",
+        job_title: "Developer",
+        country: "USA",
+        salary: -1
+      }
+      post "/employees", params: { employee: employee_params }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["errors"]).to include("Salary must be greater than 0")
+    end
+  end
 end
