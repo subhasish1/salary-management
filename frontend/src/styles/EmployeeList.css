@@ -1,0 +1,73 @@
+.employee-list {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.employee-list h2 {
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.employees-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.employees-table thead {
+  background-color: #ecf0f1;
+  border-bottom: 2px solid #bdc3c7;
+}
+
+.employees-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.employees-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.employees-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.employees-table .actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.employees-table .actions .btn {
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .employee-list {
+    padding: 1rem;
+  }
+
+  .employees-table {
+    font-size: 0.9rem;
+  }
+
+  .employees-table th,
+  .employees-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .employees-table .actions {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .employees-table .actions .btn {
+    margin-right: 0;
+    width: 100%;
+  }
+}
