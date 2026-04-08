@@ -3,9 +3,10 @@ import './styles/App.css';
 import EmployeeList from './components/EmployeeList';
 import EmployeeForm from './components/EmployeeForm';
 import EmployeeDetail from './components/EmployeeDetail';
+import SalaryInsights from './components/SalaryInsights';
 
 function App() {
-  const [view, setView] = useState('list'); // 'list', 'add', 'edit', 'view'
+  const [view, setView] = useState('list'); // 'list', 'add', 'edit', 'view', 'insights'
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [refresh, setRefresh] = useState(0);
 
@@ -29,6 +30,11 @@ function App() {
     setRefresh((prev) => prev + 1);
   }
 
+  function handleViewInsights() {
+    setView('insights');
+    setSelectedEmployeeId(null);
+  }
+
   function handleBackToList() {
     setView('list');
     setSelectedEmployeeId(null);
@@ -38,11 +44,18 @@ function App() {
     <div className="App">
       <header className="app-header">
         <h1>Salary Management System</h1>
-        {view !== 'add' && view !== 'edit' && (
-          <button className="btn btn-primary" onClick={handleAddEmployee}>
-            + Add Employee
-          </button>
-        )}
+        <div className="header-actions">
+          {view !== 'add' && view !== 'edit' && (
+            <>
+              <button className="btn btn-primary" onClick={handleAddEmployee}>
+                + Add Employee
+              </button>
+              <button className="btn btn-secondary" onClick={handleViewInsights}>
+                📊 Salary Insights
+              </button>
+            </>
+          )}
+        </div>
       </header>
 
       <main className="app-main">
@@ -69,6 +82,9 @@ function App() {
             onBack={handleBackToList}
             onEdit={handleEditEmployee}
           />
+        )}
+        {view === 'insights' && (
+          <SalaryInsights onBack={handleBackToList} />
         )}
       </main>
     </div>

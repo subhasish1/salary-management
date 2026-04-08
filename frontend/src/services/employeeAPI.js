@@ -46,3 +46,21 @@ export const employeeAPI = {
     if (!response.ok) throw new Error('Failed to delete employee');
   },
 };
+
+export const salaryInsightsAPI = {
+  async getSalaryByCountry(country) {
+    const response = await fetch(`${API_BASE_URL}/salary_insights/by_country?country=${encodeURIComponent(country)}`);
+    if (!response.ok) throw new Error('Failed to fetch salary insights');
+    return response.json();
+  },
+
+  async getSalaryByJobTitle(country, jobTitle) {
+    const params = new URLSearchParams({
+      country: country,
+      job_title: jobTitle,
+    });
+    const response = await fetch(`${API_BASE_URL}/salary_insights/by_job_title?${params}`);
+    if (!response.ok) throw new Error('Failed to fetch salary insights');
+    return response.json();
+  },
+};
