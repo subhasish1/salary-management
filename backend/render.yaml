@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: salary-backend
+    runtime: ruby
+    buildCommand: bundle install && rails db:migrate
+    startCommand: bundle exec rails server -p 10000 -b 0.0.0.0
