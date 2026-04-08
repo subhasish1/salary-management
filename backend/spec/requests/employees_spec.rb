@@ -87,4 +87,70 @@ RSpec.describe "Employees API", type: :request do
       expect(parsed_body["errors"]).to include("Salary must be greater than 0")
     end
   end
+
+  describe "PUT /employees/:id" do
+    it "updates an existing employee" do
+      employee = FactoryBot.create(:employee, first_name: "Bob", last_name: "Brown")
+
+      update_params = {
+        first_name: "Robert",
+        last_name: "Brown",
+        job_title: "Senior Developer",
+        country: "USA",
+        salary: 90000
+      }
+
+      put "/employees/#{employee.id}", params: { employee: update_params }
+
+      expect(response).to have_http_status(:ok)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["full_name"]).to eq("Robert Brown")
+      expect(parsed_body["job_title"]).to eq("Senior Developer")
+      expect(parsed_body["country"]).to eq("USA")
+      expect(parsed_body["salary"]).to eq(90000)
+    end
+
+    it "returns 404 for non-existent employee" do
+      put "/employees/99999", params: { employee: { first_name: "Test" } }
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "returns errors for invalid salary input" do
+      employee = FactoryBot.create(:employee, first_name: "Bob", last_name: "Brown")
+
+      put "/employees/#{employee.id}", params: { employee: { salary: -1 } }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["errors"]).to include("Salary must be greater than 0")
+    end
+
+    it "returns errors for invalid update, raise StandardError" do
+      employee = FactoryBot.create(:employee, first_name: "Bob", last_name: "Brown")
+
+      allow_any_instance_of(Employee).to receive(:update!).and_raise(StandardError, "Update failed")
+
+      put "/employees/#{employee.id}", params: { employee: { first_name: "Test" } }
+
+      expect(response).to have_http_status(:internal_server_error)
+    end
+  end
+
+  describe "DELETE /employees/:id" do
+    it "deletes an existing employee" do
+      employee = FactoryBot.create(:employee)
+
+      delete "/employees/#{employee.id}"
+
+      expect(response).to have_http_status(:no_content)
+      expect(Employee.find_by(id: employee.id)).to be_nil
+    end
+
+    it "returns 404 for non-existent employee" do
+      delete "/employees/99999"
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
