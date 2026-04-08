@@ -13,7 +13,8 @@ class EmployeePresenter
       full_name: full_name,
       job_title: @employee.job_title,
       country: @employee.country,
-      salary: @employee.salary
+      salary: @employee.salary,
+      email: @employee.email
     }
   end
 end
