@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :employees
+  
+  get 'salary_insights/by_country', to: 'salary_insights#by_country'
+  get 'salary_insights/by_job_title', to: 'salary_insights#by_job_title'
 end
