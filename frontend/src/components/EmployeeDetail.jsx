@@ -53,7 +53,7 @@ export default function EmployeeDetail({ employeeId, onBack, onEdit }) {
         </div>
         <div className="info-item">
           <label>Salary:</label>
-          <p>${employee.salary.toLocaleString()}</p>
+          <p>{employee.salary.toLocaleString()}</p>
         </div>
       </div>
     </div>

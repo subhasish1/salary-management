@@ -61,7 +61,7 @@ export default function EmployeeList({ onViewEmployee, onEditEmployee, onRefresh
                 <td>{employee.full_name}</td>
                 <td>{employee.job_title}</td>
                 <td>{employee.country}</td>
-                <td>${employee.salary.toLocaleString()}</td>
+                <td>{employee.salary.toLocaleString()}</td>
                 <td className="actions">
                   <button
                     className="btn btn-primary btn-sm"
